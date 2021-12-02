@@ -102,6 +102,10 @@ func part2() (int, error) {
 		windowIdx = (windowIdx + 1) % 3
 	}
 
+	if err := s.Err(); err != nil {
+		return 0, fmt.Errorf("encountered error while scanning: %w", err)
+	}
+
 	var increasing int
 	var last *int
 	for i := range windows {
