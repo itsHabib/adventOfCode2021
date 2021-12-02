@@ -19,6 +19,17 @@ type moves struct {
 }
 
 func main() {
+	if err := part1(); err != nil {
+		log.Fatalf("unable to complete part 1: %v", err)
+	}
+	if err := part2(); err != nil {
+		log.Fatalf("unable to complete part 2: %v", err)
+	}
+}
+
+// increment each direction as we find them, get the depth by subtracting up and
+// down.
+func part1() error {
 	s, err := inputScanner("day2/input.txt")
 	if err != nil {
 		log.Fatalf("unable to get input scanner: %v", err)
@@ -29,7 +40,7 @@ func main() {
 		l := s.Text()
 		dir, amount, err := getMove(strings.TrimSpace(l))
 		if err != nil {
-			log.Fatalf("unable to get move from input line: %v", err)
+			return fmt.Errorf("unable to get move from input line: %w", err)
 		}
 		switch strings.ToLower(dir) {
 		case "forward":
@@ -39,7 +50,7 @@ func main() {
 		case "up":
 			m.up += amount
 		default:
-			log.Fatalf("unexpected direction type: %s", dir)
+			return fmt.Errorf("unexpected direction type: %s", dir)
 		}
 	}
 
@@ -54,6 +65,48 @@ func main() {
 	fmt.Println("depth: ", depth)
 	fmt.Println("horizontal: ", m.forward)
 	fmt.Println("answer: ", depth*m.forward)
+
+	return nil
+}
+
+type moves2 struct {
+	aim        int
+	depth      int
+	horizontal int
+}
+
+// track depth and aim as we encounter each direction
+func part2() error {
+	s, err := inputScanner("day2/input.txt")
+	if err != nil {
+		log.Fatalf("unable to get input scanner: %v", err)
+	}
+
+	var m moves2
+	for s.Scan() {
+		l := s.Text()
+		dir, amount, err := getMove(strings.TrimSpace(l))
+		if err != nil {
+			return fmt.Errorf("unable to get move from input line: %w", err)
+		}
+		switch strings.ToLower(dir) {
+		case "forward":
+			m.horizontal += amount
+			m.depth += m.aim * amount
+		case "down":
+			m.aim += amount
+		case "up":
+			m.aim -= amount
+		default:
+			return fmt.Errorf("unexpected direction type: %s", dir)
+		}
+	}
+
+	fmt.Println("depth: ", m.depth)
+	fmt.Println("horizontal: ", m.horizontal)
+	fmt.Println("answer: ", m.depth*m.horizontal)
+
+	return nil
 }
 
 func getMove(l string) (string, int, error) {
