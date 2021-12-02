@@ -10,7 +10,6 @@ import (
 	"strings"
 )
 
-
 const (
 	input = "day1/input.txt"
 )
@@ -47,7 +46,7 @@ func part1() (int, error) {
 			return 0, fmt.Errorf("unable to convert: %w", err)
 		}
 
-		if last != nil && num > *last  {
+		if last != nil && num > *last {
 			increasing++
 		}
 		last = &num
@@ -58,11 +57,6 @@ func part1() (int, error) {
 	}
 
 	return increasing, nil
-}
-
-type window struct {
-	letter string
-	sum int
 }
 
 // create a running sliding window and variables to track state as we go through
@@ -105,7 +99,7 @@ func part2() (int, error) {
 		}
 
 		current++
-		windowIdx =  (windowIdx + 1) % 3
+		windowIdx = (windowIdx + 1) % 3
 	}
 
 	var increasing int
