@@ -22,6 +22,9 @@ func main() {
 	}
 }
 
+// create a counter array that holds a sum in which each index value describes
+// the most common bit of the ith bit of the number. We form the gamma binary
+// num and flip its bits to get epsilon.
 func part1() error {
 	s, err := inputScanner(input)
 	if err != nil {
@@ -76,6 +79,9 @@ func part1() error {
 	return nil
 }
 
+// We create a counter array at the specified index for both the oxygen and
+// co2 reading for each bit. With the counter array we can form both
+// the oxygen and co2 reading using the most/least common bits.
 func part2() error {
 	s, err := inputScanner(input)
 	if err != nil {
