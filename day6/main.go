@@ -20,7 +20,6 @@ func main() {
 	}
 
 	numsStr := strings.Split(string(inputB), ",")
-	fmt.Println(string(inputB))
 	// 0 - 8
 	nums := make([]int, 9)
 	for i := range numsStr {
